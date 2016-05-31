@@ -62,6 +62,8 @@ class MainWindow:
         self._r += 1
         self._pitStrat = tk.Button(text="Pit Strategy", command=self._initPitStratWindow)
         self._pitStrat.grid(row=self._r, column=1, columnspan=2)
+        self._editValuesButton = tk.Button(text="Edit Values", command=self._editValuesWindow)
+        self._editValuesButton.grid(row=self._r, column=4, columnspan=2)
 
         self._r += 1
         self._cliffLeft = tk.Label(text="Cliff Lap")
@@ -312,3 +314,11 @@ class MainWindow:
 
         self._updateLabels()
         self._stratWindow.destroy()
+
+    """
+    called when program is launched and when the edit values button is pressed
+    updates variables when Done button is pressed
+    """
+    def _editValuesWindow(self):
+        self._editWindow = tk.Toplevel()
+
