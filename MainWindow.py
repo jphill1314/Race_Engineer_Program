@@ -202,7 +202,8 @@ class MainWindow:
             self._rfWearRate = (100.0 - self._rfWear) / (self._currentLap - self._lastPitLap)
             self._lrWearRate = (100.0 - self._lrWear) / (self._currentLap - self._lastPitLap)
             self._rrWearRate = (100.0 - self._rrWear) / (self._currentLap - self._lastPitLap)
-
+        else:
+            return
         self._lfCliff = self._currentLap + self._calcCliffLap(self._lfWearRate, self._lfWear)
         self._rfCliff = self._currentLap + self._calcCliffLap(self._rfWearRate, self._rfWear)
         self._lrCliff = self._currentLap + self._calcCliffLap(self._lrWearRate, self._lrWear)
