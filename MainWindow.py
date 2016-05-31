@@ -140,6 +140,7 @@ class MainWindow:
         self._highMixLaps = self._highMixCalc()
         self._highMixLapsLabel.config(text="Mix 2 laps: " + str(self._highMixLaps))
 
+        self._calcTireWearRate()
         if self._lfCliff >= self._pitLaps[self._nextPit]:
             self._lfCliffLap.config(text=str(self._lfCliff), fg="green")
         else:
@@ -249,7 +250,6 @@ class MainWindow:
                 self._pitLaps[self._nextPit] = self._currentLap - 1
                 self._nextPit += 1
 
-            self._calcTireWearRate()
             self._updateLabels()
 
 
@@ -322,3 +322,60 @@ class MainWindow:
     def _editValuesWindow(self):
         self._editWindow = tk.Toplevel()
 
+        rn = 0
+
+        self._LapsLabel = tk.Label(self._editWindow, text="Total Laps: ")
+        self._LapsLabel.grid(row=rn, column=0)
+        self._LapsEntry = tk.Entry(self._editWindow, width=10)
+        self._LapsEntry.insert(0, self._totalLaps)
+        self._LapsEntry.grid(row=rn, column=1)
+
+        rn += 1
+
+        self._normalFuelLabel = tk.Label(self._editWindow, text="Normal Fuel Usage per Lap: ")
+        self._normalFuelLabel.grid(row=rn, column=0)
+        self._normalFuelEntry = tk.Entry(self._editWindow, width=10)
+        self._normalFuelEntry.insert(0, self._normalFuelPerLap)
+        self._normalFuelEntry.grid(row=rn, column=1)
+
+        rn += 1
+
+        self._highFuelLabel = tk.Label(self._editWindow, text="High Mix Fuel Usage per Lap: ")
+        self._highFuelLabel.grid(row=rn, column=0)
+        self._highFuelEntry = tk.Entry(self._editWindow, width=10)
+        self._highFuelEntry.insert(0, self._highMixFuelPerLap)
+        self._highFuelEntry.grid(row=rn, column=1)
+
+        rn += 1
+
+        self._editFuelLabel = tk.Label(self._editWindow, text="Starting Fuel: ")
+        self._editFuelLabel.grid(row=rn, column=0)
+        self._editFuelEntry = tk.Entry(self._editWindow, width=10)
+        self._editFuelEntry.insert(0, self._startFuel)
+        self._editFuelEntry.grid(row=rn, column=1)
+
+        rn += 1
+
+        self._editCliffLabel = tk.Label(self._editWindow, text="Tire Cliff %: ")
+        self._editCliffLabel.grid(row=rn, column=0)
+        self._editCliffEntry = tk.Entry(self._editWindow, width=10)
+        self._editCliffEntry.insert(0, self._wearCliff)
+        self._editCliffEntry.grid(row=rn, column=1)
+
+        rn += 1
+
+        self._editWindowButton = tk.Button(self._editWindow, text="Done", command=self._editWindowFinish)
+        self._editWindowButton.grid(row=rn, columnspan=2)
+
+    """
+    Closes edit window and saves all values entered
+    """
+    def _editWindowFinish(self):
+        self._totalLaps = int(self._LapsEntry.get())
+        self._normalFuelPerLap = float(self._normalFuelEntry.get())
+        self._highMixFuelPerLap = float(self._highFuelEntry.get())
+        self._startFuel = float(self._editFuelEntry.get())
+        self._wearCliff = int(self._editCliffEntry.get())
+
+        self._updateLabels()
+        self._editWindow.destroy()
