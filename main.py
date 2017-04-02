@@ -6,7 +6,7 @@ Things to add:
         High Mix fuel per lap
         Starting fuel
         Tire cliff
-
+        Allow refueling
 """
 
 import MainWindow

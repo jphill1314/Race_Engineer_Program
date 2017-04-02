@@ -170,8 +170,11 @@ class MainWindow:
         lapsLeft = self._totalLaps - self._currentLap + 1
         highMixDiff = self._highMixFuelPerLap - self._normalFuelPerLap
 
-        extraFuel = self._currentFuel - (lapsLeft * self._normalFuelPerLap)
-        return math.floor(extraFuel / highMixDiff)
+        if highMixDiff > 0:
+            extraFuel = self._currentFuel - (lapsLeft * self._normalFuelPerLap)
+            return math.floor(extraFuel / highMixDiff)
+        else:
+            return 0
 
 
     """
